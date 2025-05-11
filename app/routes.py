@@ -17,8 +17,18 @@ def root():
 @app.route('/quest/<int:id>')
 def quest(id):
     quest = models.Quest.query.filter_by(id=id).first_or_404()
-    print(quest, quest.name)
     return render_template('quest.html', quest=quest)   
+
+@app.route('/trader/<int:id>')
+def trader(id):
+    trader = models.Trader.query.filter_by(id=id).first_or_404()
+    return render_template('trader.html', trader=trader)
+
+
+@app.route('/location/<int:id>')
+def location(id):
+    location = models.Location.query.filter_by(id=id).first_or_404()
+    return render_template('location.html', location=location)
 
 
 @app.errorhandler(404)

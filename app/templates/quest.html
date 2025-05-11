@@ -24,6 +24,17 @@
     {% endfor %}
 </ul>
 
+<ul>
+    {% for quest in quest.previous %}
+        <li>{{ quest.name }}</li>
+    {% endfor %}
+</ul>
+
+<ul>
+    {% for quest in quest.subsequent %}
+        <li>{{ quest.name }}</li>
+    {% endfor %}
+</ul>
 
 
 

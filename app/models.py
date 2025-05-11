@@ -17,6 +17,10 @@ QuestReward = db.Table('QuestReward',
     db.Column('rid', db.Integer, db.ForeignKey('Reward.id'))
 )
 
+Order = db.Table('Order',
+    db.Column('previous', db.Integer, db.ForeignKey('Quest.id')),
+    db.Column('subsequent', db.Integer, db.ForeignKey('Quest.id'))
+)
 
 class Quest(db.Model):
     __tablename__ = 'Quest'
@@ -35,6 +39,10 @@ class Quest(db.Model):
     objectives = db.relationship('Objective', secondary = QuestObjective, back_populates = 'quests')
 
     rewards = db.relationship('Reward', secondary = QuestReward, back_populates = 'quests')
+
+    subsequent = db.relationship('Quest', secondary = Order, primaryjoin = (Order.c.previous == id), secondaryjoin = (Order.c.subsequent == id), back_populates = 'previous')
+
+    previous = db.relationship('Quest', secondary = Order, primaryjoin = (Order.c.subsequent == id), secondaryjoin = (Order.c.previous == id), back_populates = 'subsequent')
 
     def __repr__(self):
         return self.name 
