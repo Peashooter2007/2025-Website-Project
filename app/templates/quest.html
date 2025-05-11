@@ -1,0 +1,30 @@
+<h2> {{ quest }} </h2> 
+
+<p>{{ quest.name }}</p>
+<p>{{ quest.desc }}</p>
+<p>{{ quest.lvl }}</p>
+<p>{{ quest.exp }}</p>
+<p>{{ quest.trader_name }}</p>
+
+<ul>
+    {% for location in quest.locations %}
+        <li>{{ location.name }}</li>
+    {% endfor %}
+</ul>
+
+<ul>
+    {% for objective in quest.objectives %}
+        <li>{{ objective.desc }}</li>
+    {% endfor %}
+</ul>
+
+<ul>
+    {% for reward in quest.rewards %}
+        <li>{{ reward.item }}</li>
+    {% endfor %}
+</ul>
+
+
+
+
+

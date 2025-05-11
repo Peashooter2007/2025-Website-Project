@@ -30,11 +30,11 @@ class Quest(db.Model):
 
     trader_name = db.relationship('Trader', backref='quests_given_by_this_trader')
 
-    location = db.relationship('Location', secondary = QuestLocation, back_populates = 'quests')
+    locations = db.relationship('Location', secondary = QuestLocation, back_populates = 'quests')
 
-    objective = db.relationship('Objective', secondary = QuestObjective, back_populates = 'quests')
+    objectives = db.relationship('Objective', secondary = QuestObjective, back_populates = 'quests')
 
-    reward = db.relationship('Reward', secondary = QuestReward, back_populates = 'quests')
+    rewards = db.relationship('Reward', secondary = QuestReward, back_populates = 'quests')
 
     def __repr__(self):
         return self.name 
@@ -48,28 +48,34 @@ class Location(db.Model):
     image = db.Column(db.Text())
     map = db.Column(db.Text())
 
-    quest = db.relationship('Quest', secondary = QuestLocation, back_populates = 'locations')
+    quests = db.relationship('Quest', secondary = QuestLocation, back_populates = 'locations')
 
     def __repr__(self):
         return self.name 
 
 
-class Objective(db.model):
+class Objective(db.Model):
+    __tablename__ = 'Objective'
     id = db.Column(db.Integer, primary_key=True) 
     desc = db.Column(db.Text())
-    quest = db.relationship('Quest', secondary = QuestObjective, back_populates = 'objectives')
+
+    quests = db.relationship('Quest', secondary = QuestObjective, back_populates = 'objectives')
 
 
-class Reward(db.model):
+class Reward(db.Model):
     __tablename__ = 'Reward'
     id = db.Column(db.Integer, primary_key=True) 
     item = db.Column(db.Text())
-    quest = db.relationship('Quest', secondary = QuestReward, back_populates = 'rewards')
+
+    quests = db.relationship('Quest', secondary = QuestReward, back_populates = 'rewards')
 
 
-class Trader(db.model):
+class Trader(db.Model):
     __tablename__ = 'Trader'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text())    
     desc = db.Column(db.Text())
     image = db.Column(db.Text())
+
+    def __repr__(self):
+        return self.name 
