@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+{% for trader in traders %}
+    <li><a href="/trader/{{ trader.id }}">{{ trader.name }}</a></li>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+{% for quest in quests %}
+    <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
+{% endfor %}
+
+{% endblock %}

@@ -14,6 +14,21 @@ import app.models as models
 def root():
     return render_template('home.html')
 
+@app.route('/quests')
+def quests():
+    quests = models.Quest.query.all()
+    return render_template('quests.html', quests=quests)
+
+@app.route('/traders')
+def traders():
+    traders = models.Trader.query.all()
+    return render_template('traders.html', traders=traders)
+
+@app.route('/locations')
+def locations():
+    locations = models.Location.query.all()
+    return render_template('locations.html', locations=locations)
+
 @app.route('/quest/<int:id>')
 def quest(id):
     quest = models.Quest.query.filter_by(id=id).first_or_404()
@@ -34,6 +49,3 @@ def location(id):
 @app.errorhandler(404)
 def page_not_found(e):
     return('sum ting wong')
-
-
-
