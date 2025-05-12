@@ -12,38 +12,38 @@ import app.models as models
 
 @app.route('/')
 def root():
-    return render_template('home.html')
+    return render_template('home.html', page_title = 'Home')
 
 @app.route('/quests')
 def quests():
     quests = models.Quest.query.all()
-    return render_template('quests.html', quests=quests)
+    return render_template('quests.html', quests=quests, page_title = 'Quests')
 
 @app.route('/traders')
 def traders():
     traders = models.Trader.query.all()
-    return render_template('traders.html', traders=traders)
+    return render_template('traders.html', traders=traders, page_title = 'traders')
 
 @app.route('/locations')
 def locations():
     locations = models.Location.query.all()
-    return render_template('locations.html', locations=locations)
+    return render_template('locations.html', locations=locations, page_title = 'locations')
 
 @app.route('/quest/<int:id>')
 def quest(id):
     quest = models.Quest.query.filter_by(id=id).first_or_404()
-    return render_template('quest.html', quest=quest)   
+    return render_template('quest.html', quest=quest, page_title = quest)   
 
 @app.route('/trader/<int:id>')
 def trader(id):
     trader = models.Trader.query.filter_by(id=id).first_or_404()
-    return render_template('trader.html', trader=trader)
+    return render_template('trader.html', trader=trader, page_title = trader)
 
 
 @app.route('/location/<int:id>')
 def location(id):
     location = models.Location.query.filter_by(id=id).first_or_404()
-    return render_template('location.html', location=location)
+    return render_template('location.html', location=location, page_title = location)
 
 
 @app.errorhandler(404)
