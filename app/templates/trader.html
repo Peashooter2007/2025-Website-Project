@@ -6,4 +6,9 @@
 <p>{{ trader.name }}</p>
 <p>{{ trader.desc }}</p> 
 
+{% for quest in trader.quests %}
+    <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
+{% endfor %}
+
+
 {% endblock %}

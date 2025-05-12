@@ -6,4 +6,10 @@
 <p>{{ location.name }}</p>
 <p>{{ location.desc }}</p>
 
+<ul>
+    {% for quest in location.quests %}
+        <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
+    {% endfor %}
+</ul>
+
 {% endblock %}

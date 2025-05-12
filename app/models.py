@@ -32,7 +32,7 @@ class Quest(db.Model):
     image = db.Column(db.Text())
     trader = db.Column(db.Integer, db.ForeignKey('Trader.id'))
 
-    trader_name = db.relationship('Trader', backref='quests_given_by_this_trader')
+    trader_name = db.relationship('Trader', back_populates = 'quests')
 
     locations = db.relationship('Location', secondary = QuestLocation, back_populates = 'quests')
 
@@ -55,7 +55,7 @@ class Location(db.Model):
     desc = db.Column(db.Text())
     image = db.Column(db.Text())
     map = db.Column(db.Text())
-
+    
     quests = db.relationship('Quest', secondary = QuestLocation, back_populates = 'locations')
 
     def __repr__(self):
@@ -84,6 +84,8 @@ class Trader(db.Model):
     name = db.Column(db.Text())    
     desc = db.Column(db.Text())
     image = db.Column(db.Text())
+    
+    quests = db.relationship('Quest', back_populates = 'trader_name')
 
     def __repr__(self):
         return self.name 

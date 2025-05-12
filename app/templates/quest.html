@@ -7,11 +7,11 @@
 <p>{{ quest.desc }}</p>
 <p>{{ quest.lvl }}</p>
 <p>{{ quest.exp }}</p>
-<p>{{ quest.trader_name }}</p>
+<p><a href="/trader/{{ quest.trader }}">{{ quest.trader_name }}</a></p>
 
 <ul>
     {% for location in quest.locations %}
-        <li>{{ location.name }}</li>
+        <li><a href="/location/{{ location.id }}">{{ location.name }}</a></li>
     {% endfor %}
 </ul>
 
@@ -29,13 +29,13 @@
 
 <ul>
     {% for quest in quest.previous %}
-        <li>{{ quest.name }}</li>
+        <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
     {% endfor %}
 </ul>
 
 <ul>
     {% for quest in quest.subsequent %}
-        <li>{{ quest.name }}</li>
+        <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
     {% endfor %}
 </ul>
 
