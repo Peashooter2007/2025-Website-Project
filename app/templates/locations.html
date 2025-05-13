@@ -1,8 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
 
-{% for location in locations %}
-    <li><a href="/location/{{ location.id }}">{{ location.name }}</a></li>
-{% endfor %}
+<ul>
+    {% for location in locations %}
+        <li><a href="/location/{{ location.id }}">{{ location.name }}</a></li>
+    {% endfor %}
+</ul>
 
 {% endblock %}

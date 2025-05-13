@@ -6,6 +6,9 @@
 <p>{{ location.name }}</p>
 <p>{{ location.desc }}</p>
 
+<img src = "\static\images\locations\{{ location.image }}">
+<img src = "\static\images\locations\{{ location.map }}">
+
 <ul>
     {% for quest in location.quests %}
         <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>

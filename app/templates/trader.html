@@ -6,9 +6,12 @@
 <p>{{ trader.name }}</p>
 <p>{{ trader.desc }}</p> 
 
-{% for quest in trader.quests %}
-    <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
-{% endfor %}
+<img src = "\static\images\traders\{{ trader.image }}">
 
+<ul>
+    {% for quest in trader.quests %}
+        <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
+    {% endfor %}
+</ul>
 
 {% endblock %}

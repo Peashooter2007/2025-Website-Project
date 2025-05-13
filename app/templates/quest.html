@@ -9,6 +9,8 @@
 <p>{{ quest.exp }}</p>
 <p><a href="/trader/{{ quest.trader }}">{{ quest.trader_name }}</a></p>
 
+<img src = "\static\images\quests\{{ quest.image }}"/>
+
 <ul>
     {% for location in quest.locations %}
         <li><a href="/location/{{ location.id }}">{{ location.name }}</a></li>

@@ -1,8 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
 
-{% for trader in traders %}
-    <li><a href="/trader/{{ trader.id }}">{{ trader.name }}</a></li>
-{% endfor %}
+<ul>
+    {% for trader in traders %}
+        <li><a href="/trader/{{ trader.id }}">{{ trader.name }}</a></li>
+    {% endfor %}
+</ul>
 
 {% endblock %}
