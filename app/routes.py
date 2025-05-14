@@ -22,12 +22,12 @@ def quests():
 @app.route('/traders')
 def traders():
     traders = models.Trader.query.all()
-    return render_template('traders.html', traders=traders, page_title = 'traders')
+    return render_template('traders.html', traders=traders, page_title = 'Traders')
 
 @app.route('/locations')
 def locations():
     locations = models.Location.query.all()
-    return render_template('locations.html', locations=locations, page_title = 'locations')
+    return render_template('locations.html', locations=locations, page_title = 'Locations')
 
 @app.route('/quest/<int:id>')
 def quest(id):
@@ -48,4 +48,4 @@ def location(id):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return('sum ting wong')
+    return('No Such Webpage!')
