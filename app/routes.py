@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, abort
+from flask import render_template, abort, request
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -44,6 +44,16 @@ def trader(id):
 def location(id):
     location = models.Location.query.filter_by(id=id).first_or_404()
     return render_template('location.html', location=location, page_title = location)
+
+@app.route('/edit')
+def edit():
+    return render_template('edit.html', page_title = 'Edit')
+
+@app.route('/add', methods = ['GET','POST'])
+def add():
+    print(request.args.get('quest'))
+    return 'Done'
+
 
 
 @app.errorhandler(404)
