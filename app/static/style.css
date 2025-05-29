@@ -4,26 +4,43 @@ html {
   font-family: 'Saira';
 }
 
+a:link,a:visited{
+  color:#B76925;
+  text-decoration:none;
+}
+
+a:hover{
+  color:bisque
+}
+
 body {
-  background-color: #fdfdfd;
+  background-color: #282828;
+  color: #D6D1CB;
 }
 
 nav {
-  background-color:#fdfdfd;
-  overflow:hidden;
+  background-color:#323232;
+  text-align: center;
+  width: 100%;
 }
 
-nav a{
-  float: left;
-  color: #000000;
-  text-align: center;
+nav a:link, nav a:visited{
+  display: inline-block;
+  margin-right: -3.5px;
+  color: #CDCDCD;
   text-decoration: none;
   padding: 16px 18px;
   font-size: 24px;
 }
 
-nav a:hover {
-  background-color: #ddd;
-  color: black;
+nav a:hover, a.active:hover {
+  background-color: #CDCDCD;
+  color: #323232;
 }
 
+nav a.active{
+  color: #CDCDCD;
+  font-weight: bolder;
+  padding: 13px 18px;
+  box-shadow: 0 3px 0 0 #B76925;
+}   

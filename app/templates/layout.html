@@ -5,7 +5,14 @@
    <link rel="stylesheet" href="/static/style.css" />
  </head>
  <body>
-   {% include 'nav.html' %}
+
+    <nav>
+      <a href="/" class="{% block nav_home %}{% endblock %}">Home</a> 
+      <a href="/quests" class="{% block nav_quests %}{% endblock %}">Quests</a>
+      <a href="/traders" class="{% block nav_traders %}{% endblock %}">Traders</a>
+      <a href="/locations" class="{% block nav_locations %}{% endblock %}">Locations</a>
+    </nav>
+
    {% block content %}{% endblock %}
  </body>
 </html>
