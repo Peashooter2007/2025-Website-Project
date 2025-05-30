@@ -4,6 +4,7 @@ html {
   font-family: 'Saira';
 }
 
+
 a:link,a:visited{
   color:#B76925;
   text-decoration:none;
@@ -16,12 +17,22 @@ a:hover{
 body {
   background-color: #282828;
   color: #D6D1CB;
+  margin:0;
+}
+
+.banner{
+  background-image: url("/static/images/placeholder.png");
+  background-position:center;
+  background-repeat: no-repeat;
+  background-size:cover;
+  position:relative;
+  font-size:10vw;
 }
 
 nav {
   background-color:#323232;
   text-align: center;
-  width: 100%;
+  width:100%;
 }
 
 nav a:link, nav a:visited{
@@ -42,5 +53,6 @@ nav a.active{
   color: #CDCDCD;
   font-weight: bolder;
   padding: 13px 18px;
+  padding-top: 16px;
   box-shadow: 0 3px 0 0 #B76925;
 }   
