@@ -1,18 +1,25 @@
 {% extends 'layout.html' %}
 {% block content %}
 
-<h2> {{ location }} </h2> 
+<div class="location-images">
+    <div class="location-image">
+        <img src = "\static\images\locations\{{ location.image }}">
+    </div>
+    <div class="location-image">
+        <img src = "\static\images\locations\{{ location.map }}">
+    </div>
+</div>
 
-<p>{{ location.name }}</p>
-<p>{{ location.desc }}</p>
+<div class=location-body>
+    <h2> {{ location }} </h2> 
 
-<img src = "\static\images\locations\{{ location.image }}">
-<img src = "\static\images\locations\{{ location.map }}">
+    <p>{{ location.desc }}</p>
 
-<ul>
-    {% for quest in location.quests %}
-        <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
-    {% endfor %}
-</ul>
-
+    <a>Quests:</a>
+    <ul>
+        {% for quest in location.quests %}
+            <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

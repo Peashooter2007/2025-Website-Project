@@ -56,3 +56,20 @@ nav a.active{
   padding-top: 16px;
   box-shadow: 0 3px 0 0 #B76925;
 }   
+
+
+.location-images{
+  justify-content: space-around;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.location-image img{
+  margin-top:50px;
+  height:450px;
+} 
+
+.location-body{
+  margin-left:20px;
+}
