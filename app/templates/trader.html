@@ -1,17 +1,25 @@
 {% extends 'layout.html' %}
 {% block content %}
 
-<h2> {{ trader }} </h2> 
 
-<p>{{ trader.name }}</p>
-<p>{{ trader.desc }}</p> 
 
-<img src = "\static\images\traders\{{ trader.image }}">
+<div class="trader-body">
+    <img src = "\static\images\traders\{{ trader.image }}">
 
-<ul>
-    {% for quest in trader.quests %}
-        <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
-    {% endfor %}
-</ul>
+    <div class="trader-bodytext">
+        <h2> {{ trader }} </h2> 
+        <p>{{ trader.desc }}</p> 
+    </div>
+</div>
+
+<div class="trader-questlist">
+    <p>Quests:</p>
+
+    <ul>
+        {% for quest in trader.quests %}
+            <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
 
 {% endblock %}

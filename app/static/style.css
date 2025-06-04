@@ -4,7 +4,6 @@ html {
   font-family: 'Saira';
 }
 
-
 a:link,a:visited{
   color:#B76925;
   text-decoration:none;
@@ -37,7 +36,7 @@ nav {
 
 nav a:link, nav a:visited{
   display: inline-block;
-  margin-right: -3.5px;
+  margin-right: -3.75px;
   color: #CDCDCD;
   text-decoration: none;
   padding: 16px 18px;
@@ -54,9 +53,8 @@ nav a.active{
   font-weight: bolder;
   padding: 13px 18px;
   padding-top: 16px;
-  box-shadow: 0 3px 0 0 #B76925;
+  box-shadow: 0 2.75px 0 0 #B76925;
 }   
-
 
 .location-images{
   justify-content: space-around;
@@ -71,5 +69,19 @@ nav a.active{
 } 
 
 .location-body{
+  margin-left:20px;
+}
+
+.trader-body{
+  display:flex;
+  justify-content: left;
+}
+
+.trader-body img{
+  width:500px;
+  margin:25px;
+}
+
+.trader-questlist{
   margin-left:20px;
 }

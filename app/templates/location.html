@@ -15,7 +15,7 @@
 
     <p>{{ location.desc }}</p>
 
-    <a>Quests:</a>
+    <p>Quests:</p>
     <ul>
         {% for quest in location.quests %}
             <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
