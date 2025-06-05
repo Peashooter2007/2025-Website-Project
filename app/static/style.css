@@ -25,7 +25,7 @@ body {
   background-repeat: no-repeat;
   background-size:cover;
   position:relative;
-  font-size:10vw;
+  font-size:15vh;
 }
 
 nav {
@@ -83,5 +83,40 @@ nav a.active{
 }
 
 .trader-questlist{
+  margin-left:20px;
+}
+
+.quest-body{
+  display:flex;
+  justify-content: left;
+}
+
+.quest-body img{
+  width:500px;
+  margin:25px;
+  margin-bottom: 0px;
+}
+
+.quest-bodytext{
+  line-height:10px;
+  margin-top:10px;
+}
+
+.quest-bodytext h3{
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.quest-order{
+  display:flex;
+  justify-content: left;
+  text-align: center;
+}
+  
+.quest-orderlist{
+  width:250px;
+}
+
+.quest-lists{
   margin-left:20px;
 }

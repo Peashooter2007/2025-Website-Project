@@ -1,44 +1,56 @@
 {% extends 'layout.html' %}
 {% block content %}
 
-<h2> {{ quest }} </h2> 
+<div class="quest-body">
+    <img src = "\static\images\quests\{{ quest.image }}"/>
+    <div class="quest-bodytext">
+        <h2> {{ quest }} </h2> 
+        <h3>Minimum level: lvl.{{ quest.lvl }}</h3><br>
+        <p>"{{ quest.desc }}" - <a href="/trader/{{ quest.trader }}">{{ quest.trader_name }}</a></p>
+    </div>
+</div>
 
-<p>{{ quest.name }}</p>
-<p>{{ quest.desc }}</p>
-<p>{{ quest.lvl }}</p>
-<p>{{ quest.exp }}</p>
-<p><a href="/trader/{{ quest.trader }}">{{ quest.trader_name }}</a></p>
+<div class="quest-order">
+    <div class="quest-orderlist">
+        <ul>
+            Previous Quests:
+            {% for quest in quest.previous %}
+                <a href="/quest/{{ quest.id }}">{{ quest.name }}</a>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="quest-orderlist">
+        <ul>
+            Subsequent Quests:<br>
+            {% for quest in quest.subsequent %}
+                <a href="/quest/{{ quest.id }}">{{ quest.name }}</a>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 
-<img src = "\static\images\quests\{{ quest.image }}"/>
+<div class="quest-lists">
+    <p>Locations:</p>
+    <ul>
+        {% for location in quest.locations %}
+            <li><a href="/location/{{ location.id }}">{{ location.name }}</a></li>
+        {% endfor %}
+    </ul>
 
-<ul>
-    {% for location in quest.locations %}
-        <li><a href="/location/{{ location.id }}">{{ location.name }}</a></li>
-    {% endfor %}
-</ul>
+    <p>Objectives:</p>
+    <ul>
+        {% for objective in quest.objectives %}
+            <li>{{ objective.desc }}</li>
+        {% endfor %}
+    </ul>
 
-<ul>
-    {% for objective in quest.objectives %}
-        <li>{{ objective.desc }}</li>
-    {% endfor %}
-</ul>
-
-<ul>
-    {% for reward in quest.rewards %}
-        <li>{{ reward.item }}</li>
-    {% endfor %}
-</ul>
-
-<ul>
-    {% for quest in quest.previous %}
-        <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
-    {% endfor %}
-</ul>
-
-<ul>
-    {% for quest in quest.subsequent %}
-        <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
-    {% endfor %}
-</ul>
+    <p>Rewards:</p>
+    <ul>
+        {% for reward in quest.rewards %}
+            <li>{{ reward.item }}</li>
+        {% endfor %}
+        <li>+{{ quest.exp }} exp</li>
+    </ul>
+</div>
 
 {% endblock %}
