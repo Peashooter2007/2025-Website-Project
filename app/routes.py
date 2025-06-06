@@ -39,7 +39,6 @@ def trader(id):
     trader = models.Trader.query.filter_by(id=id).first_or_404()
     return render_template('trader.html', trader=trader, page_title = trader)
 
-
 @app.route('/location/<int:id>')
 def location(id):
     location = models.Location.query.filter_by(id=id).first_or_404()

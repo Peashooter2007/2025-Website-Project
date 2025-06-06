@@ -92,7 +92,8 @@ nav a.active{
 }
 
 .quest-body img{
-  width:500px;
+  height:265.5px;
+  width:471px;
   margin:25px;
   margin-bottom: 0px;
 }
@@ -100,6 +101,11 @@ nav a.active{
 .quest-bodytext{
   line-height:10px;
   margin-top:10px;
+  margin-right:200px;
+}
+
+.quest-bodytext p{
+  line-height:normal
 }
 
 .quest-bodytext h3{
@@ -114,7 +120,11 @@ nav a.active{
 }
   
 .quest-orderlist{
-  width:250px;
+  width:235.5px;
+}
+
+.quest-orderlist li{
+  list-style-type: none;
 }
 
 .quest-lists{

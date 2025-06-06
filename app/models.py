@@ -11,11 +11,11 @@ QuestObjective = db.Table('QuestObjective',
     db.Column('oid', db.Integer, db.ForeignKey('Objective.id'))
 )
 
-
-QuestReward = db.Table('QuestReward',
+QuestRep = db.Table('QuestRep',
     db.Column('qid', db.Integer, db.ForeignKey('Quest.id')),
-    db.Column('rid', db.Integer, db.ForeignKey('Reward.id'))
+    db.Column('rid', db.Integer, db.ForeignKey('Rep.id'))
 )
+
 
 Order = db.Table('Order',
     db.Column('previous', db.Integer, db.ForeignKey('Quest.id')),
@@ -34,11 +34,13 @@ class Quest(db.Model):
 
     trader_name = db.relationship('Trader', back_populates = 'quests')
 
+    rewards = db.relationship('Reward', back_populates = 'quest_name')
+
     locations = db.relationship('Location', secondary = QuestLocation, back_populates = 'quests')
 
-    objectives = db.relationship('Objective', secondary = QuestObjective, back_populates = 'quests')
+    rep = db.relationship('Rep', secondary = QuestRep, back_populates = 'quests')
 
-    rewards = db.relationship('Reward', secondary = QuestReward, back_populates = 'quests')
+    objectives = db.relationship('Objective', secondary = QuestObjective, back_populates = 'quests')
 
     subsequent = db.relationship('Quest', secondary = Order, primaryjoin = (Order.c.previous == id), secondaryjoin = (Order.c.subsequent == id), back_populates = 'previous')
 
@@ -70,13 +72,20 @@ class Objective(db.Model):
     quests = db.relationship('Quest', secondary = QuestObjective, back_populates = 'objectives')
 
 
+class Rep(db.Model):
+    __tablename__ = 'Rep'
+    id = db.Column(db.Integer, primary_key=True) 
+    rep = db.Column(db.Text())
+
+    quests = db.relationship('Quest', secondary = QuestRep, back_populates = 'rep')
+
 class Reward(db.Model):
     __tablename__ = 'Reward'
     id = db.Column(db.Integer, primary_key=True) 
     item = db.Column(db.Text())
+    quest = db.Column(db.Integer, db.ForeignKey('Quest.id'))
 
-    quests = db.relationship('Quest', secondary = QuestReward, back_populates = 'rewards')
-
+    quest_name = db.relationship('Quest', back_populates = 'rewards')
 
 class Trader(db.Model):
     __tablename__ = 'Trader'
