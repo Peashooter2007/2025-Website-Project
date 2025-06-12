@@ -130,3 +130,25 @@ nav a.active{
 .quest-lists{
   margin-left:20px;
 }
+
+.quests {
+  background-color:#1A1A1A;
+  width:98%;
+  margin-bottom: 1px;
+}
+
+.quests a{
+  display: block;
+  color: #CDCDCD;
+  text-decoration: none;
+  padding: 16px 18px;
+  padding-right: 1%;
+  font-size: 24px;
+  text-align: left;
+  box-shadow: 0 1px 0 0 #B76925;
+}
+
+.quests a:hover, a.active:hover {
+  background-color: #CDCDCD;
+  color: #323232;
+}
