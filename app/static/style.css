@@ -162,3 +162,42 @@ nav a.active{
   background-color: #CDCDCD;
   color: #323232;
 }
+
+.trader-list{
+  width:100%;
+}
+
+.trader-button {
+  text-align: center;
+  width:24%;
+  margin-left: 0;
+  margin-right:0;
+  display: inline-block;
+}
+
+.trader-button h1{
+  margin:0px;
+  font-weight:normal;
+  line-height:35px;
+  font-size: 30px;
+}
+
+.trader-button img{
+  width:375px;
+  height:210px;
+}
+
+.trader-button a{
+  margin:10px;
+  color:#D6D1CB;
+  display: inline-block;
+  background-color: #1A1A1A;
+  padding:16px;
+  border-radius: 10px;
+  margin:50px;
+}
+
+.trader-button a:hover{
+  color:#D6D1CB;
+  background-color: #323232;
+}

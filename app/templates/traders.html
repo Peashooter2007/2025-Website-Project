@@ -2,10 +2,15 @@
 {% block nav_traders %}active{% endblock %}
 {% block content %}
 
-<ul>
+<div class="trader-list">
     {% for trader in traders %}
-        <li><a href="/trader/{{ trader.id }}">{{ trader.name }}</a></li>
+        <div class="trader-button">
+            <a href="/trader/{{ trader.id }}">
+                <img src = "\static\images\traders\{{ trader.image }}"/><br>
+                <h1>{{ trader.name }}</h1>
+            </a>
+        </div>
     {% endfor %}
-</ul>
+</div>
 
 {% endblock %}
