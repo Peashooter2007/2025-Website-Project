@@ -182,6 +182,14 @@ nav a.active{
   font-size: 30px;
 }
 
+.trader-button p{
+  margin:0px;
+  font-weight:normal;
+  line-height:20px;
+  margin-left:10px;
+  margin-right:10px;
+}
+
 .trader-button img{
   width:375px;
   height:210px;
