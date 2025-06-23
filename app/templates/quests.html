@@ -3,12 +3,12 @@
 {% block content %}
 
 
-    <ul>
-        {% for quest in quests %}
-        <div class="quests">
-            <a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
-        </div>
-        {% endfor %}
-    </ul>
+<ul>
+    {% for quest in quests %}
+    <div class="quests">
+        <a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
+    </div>
+    {% endfor %}
+</ul>
 
 {% endblock %}

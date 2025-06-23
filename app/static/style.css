@@ -196,7 +196,6 @@ nav a.active{
 }
 
 .trader-button a{
-  margin:10px;
   color:#D6D1CB;
   display: inline-block;
   background-color: #1A1A1A;
@@ -206,6 +205,55 @@ nav a.active{
 }
 
 .trader-button a:hover{
+  color:#D6D1CB;
+  background-color: #323232;
+}
+
+.location-list{
+  width:100%;
+}
+
+.location-button {
+  text-align: left;
+  width:49%;
+  margin-left:0;
+  margin-right:0;
+  display: inline-block;
+}
+
+.location-button h1{
+  margin:0px;
+  font-weight:normal;
+  line-height:35px;
+  font-size: 30px;
+  margin-left:5px;
+}
+
+.location-button p{
+  margin:0px;
+  font-weight:normal;
+  line-height:20px;
+  margin-left:5px;
+  font-size:12.5px;
+  line-height:16.5px;
+}
+
+.location-button img{
+  width:375px;
+  height:210px;
+}
+
+.location-button a{
+  margin:20px;
+  color:#D6D1CB;
+  display:flex;
+  justify-content: left;
+  background-color: #1A1A1A;
+  padding:16px;
+  border-radius: 10px;
+}
+
+.location-button a:hover{
   color:#D6D1CB;
   background-color: #323232;
 }

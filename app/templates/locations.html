@@ -2,10 +2,19 @@
 {% block nav_locations %}active{% endblock %}
 {% block content %}
 
-<ul>
+<div class="location-list">
     {% for location in locations %}
-        <li><a href="/location/{{ location.id }}">{{ location.name }}</a></li>
+        <div class="location-button">
+            <a href="/location/{{ location.id }}">
+                <img src = "\static\images\locations\{{ location.image }}"/>
+                <div class="location-buttontext">
+                    <h1>{{ location.name }}</h1>
+                    <p>{{ location.desc }}</p>
+                </div>
+            </a>
+        </div> 
     {% endfor %}
-</ul>
+</div>
+
 
 {% endblock %}
