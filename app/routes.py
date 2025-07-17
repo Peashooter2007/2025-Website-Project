@@ -51,9 +51,15 @@ def location(id):
 @app.route('/add_quest', methods=['GET', 'POST'])
 def add_quest():
     form = Add_Quest()
+    traders = models.Trader.query.all()
+    form.trader.choices =[(trader.id, trader.name) for trader in traders]
     if request.method=='POST' and form.validate_on_submit():
         new_quest = models.Quest()
         new_quest.name = form.name.data
+        new_quest.desc = form.desc.data
+        new_quest.lvl = form.lvl.data
+        new_quest.exp = form.exp.data
+        new_quest.trader = form.trader.data
         db.session.add(new_quest)
         db.session.commit()
         return redirect(url_for('quest', id=new_quest.id))        

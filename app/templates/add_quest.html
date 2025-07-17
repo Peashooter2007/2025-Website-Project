@@ -2,9 +2,13 @@
 {% block nav_add_quest %}active{% endblock %}
 {% block content %}
 <form method="POST" enctype="multipart/form-data">
-    
+
     {{ form.csrf_token }}
     {{ form.name }}{{ form.name.errors }}</br>
+    {{ form.desc }}{{ form.desc.errors }}</br>
+    {{ form.lvl }}{{ form.lvl.errors }}</br>
+    {{ form.exp }}{{ form.exp.errors }}</br>
+    {{ form.trader }}{{ form.exp.trader }}</br>
     <input type="submit" value="Submit">
 
 </form>
