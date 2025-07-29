@@ -2,6 +2,7 @@ from app import app
 from flask import render_template, abort, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os
+from werkzeug.utils import secure_filename
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 db = SQLAlchemy()
@@ -12,7 +13,7 @@ WTF_CSRF_ENABLED = True
 WTF_CSRF_SECRET_KEY = 'sup3r_secr3t_passw3rd'
 
 import app.models as models
-from app.forms import Add_Quest, Add_Trader
+from app.forms import Add_Quest, Add_Trader, Add_Location
 
 @app.route('/')
 def root():
@@ -74,12 +75,33 @@ def add_quest():
 @app.route('/add_trader', methods=['GET', 'POST'])
 def add_trader():
     form = Add_Trader()
-    if request.method=='Post' and form.validate_on_submit():
+    trader_images = 'app/static/images/traders/'
+    if request.method=='POST' and form.validate_on_submit():
+        image = request.files['image']
+        imagename = secure_filename(form.image.data.filename)
+        image.save(trader_images+imagename)
         new_trader = models.Trader()
         new_trader.name = form.name.data
         new_trader.desc = form.desc.data
+        new_trader.image = imagename
+        db.session.add(new_trader)
+        db.session.commit()
+        return redirect(url_for('trader', id=new_trader.id))  
     else:
         return render_template('add_trader.html', form=form, page_title ="Add a Trader")
+    
+@app.route('/add_location', methods=['GET', 'POST'])
+def add_location():
+    form = Add_Location()
+    if request.method=='POST' and form.validate_on_submit():
+        new_location = models.Location()
+        new_location.name = form.name.data
+        new_location.desc = form.desc.data
+        db.session.add(new_location)
+        db.session.commit()
+        return redirect(url_for('location', id=new_location.id))  
+    else:
+        return render_template('add_location.html', form=form, page_title ="Add a Location")
 
 @app.errorhandler(404)
 def page_not_found(e):
