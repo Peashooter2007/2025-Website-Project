@@ -90,6 +90,7 @@ nav a.active{
 .quest-body{
   display:flex;
   justify-content: left;
+  text-overflow: ellipsis;
 }
 
 .quest-body img{

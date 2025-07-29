@@ -12,7 +12,7 @@ WTF_CSRF_ENABLED = True
 WTF_CSRF_SECRET_KEY = 'sup3r_secr3t_passw3rd'
 
 import app.models as models
-from app.forms import Add_Quest
+from app.forms import Add_Quest, Add_Trader
 
 @app.route('/')
 def root():
@@ -48,11 +48,16 @@ def location(id):
     location = models.Location.query.filter_by(id=id).first_or_404()
     return render_template('location.html', location=location, page_title = location)
 
+@app.route('/edit')
+def edit():
+    return render_template('edit.html', page_title = "Edit")
+
 @app.route('/add_quest', methods=['GET', 'POST'])
 def add_quest():
     form = Add_Quest()
     traders = models.Trader.query.all()
     form.trader.choices =[(trader.id, trader.name) for trader in traders]
+
     if request.method=='POST' and form.validate_on_submit():
         new_quest = models.Quest()
         new_quest.name = form.name.data
@@ -65,6 +70,16 @@ def add_quest():
         return redirect(url_for('quest', id=new_quest.id))        
     else:
         return render_template('add_quest.html', form=form, page_title="Add a Quest")
+
+@app.route('/add_trader', methods=['GET', 'POST'])
+def add_trader():
+    form = Add_Trader()
+    if request.method=='Post' and form.validate_on_submit():
+        new_trader = models.Trader()
+        new_trader.name = form.name.data
+        new_trader.desc = form.desc.data
+    else:
+        return render_template('add_trader.html', form=form, page_title ="Add a Trader")
 
 @app.errorhandler(404)
 def page_not_found(e):
