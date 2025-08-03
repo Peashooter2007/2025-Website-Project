@@ -9,6 +9,7 @@ class Add_Quest(FlaskForm):
     lvl = IntegerField("lvl")
     exp = IntegerField("exp")
     trader = SelectField('trader')
+    image = FileField("image")
 
 class Add_Trader(FlaskForm):
     name = StringField("name", validators=[DataRequired()])

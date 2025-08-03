@@ -56,16 +56,20 @@ def edit():
 @app.route('/add_quest', methods=['GET', 'POST'])
 def add_quest():
     form = Add_Quest()
+    quest_images = 'app/static/images/quests/'
     traders = models.Trader.query.all()
     form.trader.choices =[(trader.id, trader.name) for trader in traders]
-
     if request.method=='POST' and form.validate_on_submit():
+        image = request.files['image']
+        imagename = secure_filename(form.image.data.filename)
+        image.save(quest_images+imagename)
         new_quest = models.Quest()
         new_quest.name = form.name.data
         new_quest.desc = form.desc.data
         new_quest.lvl = form.lvl.data
         new_quest.exp = form.exp.data
         new_quest.trader = form.trader.data
+        new_quest.image = imagename
         db.session.add(new_quest)
         db.session.commit()
         return redirect(url_for('quest', id=new_quest.id))        
