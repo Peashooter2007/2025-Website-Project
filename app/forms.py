@@ -19,3 +19,6 @@ class Add_Trader(FlaskForm):
 class Add_Location(FlaskForm):
     name = StringField("name", validators=[DataRequired()])
     desc = TextAreaField("desc")
+    image = FileField("image")
+    map = FileField("map")
+    

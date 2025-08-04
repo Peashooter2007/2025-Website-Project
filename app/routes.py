@@ -97,10 +97,19 @@ def add_trader():
 @app.route('/add_location', methods=['GET', 'POST'])
 def add_location():
     form = Add_Location()
+    location_images = 'app/static/images/locations/'
     if request.method=='POST' and form.validate_on_submit():
+        image = request.files['image']
+        imagename = secure_filename(form.image.data.filename)
+        image.save(location_images+imagename)
+        map = request.files['map']
+        mapname = secure_filename(form.map.data.filename)
+        map.save(location_images+mapname)
         new_location = models.Location()
         new_location.name = form.name.data
         new_location.desc = form.desc.data
+        new_location.image = imagename
+        new_location.map = mapname
         db.session.add(new_location)
         db.session.commit()
         return redirect(url_for('location', id=new_location.id))  
