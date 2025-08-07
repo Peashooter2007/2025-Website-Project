@@ -13,16 +13,20 @@ WTF_CSRF_ENABLED = True
 WTF_CSRF_SECRET_KEY = 'sup3r_secr3t_passw3rd'
 
 import app.models as models
-from app.forms import Add_Quest, Add_Trader, Add_Location
+from app.forms import Add_Quest, Add_Trader, Add_Location, Searchbar
 
 @app.route('/')
 def root():
     return render_template('home.html', page_title = 'Home')
 
-@app.route('/quests')
+@app.route('/quests', methods = ['GET', 'POST'])
 def quests():
     quests = models.Quest.query.all()
-    return render_template('quests.html', quests=quests, page_title = 'Quests')
+    form = Searchbar()
+    if form.validate_on_submit():
+        search_query = form.search.data
+        quests = models.Quest.query.filter(models.Quest.name.ilike(f'%{search_query}%')).all()
+    return render_template('quests.html', quests=quests, page_title = 'Quests', form=form)
 
 @app.route('/traders')
 def traders():

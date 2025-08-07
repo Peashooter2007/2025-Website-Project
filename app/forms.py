@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask import Flask
-from wtforms import IntegerField, StringField, TextAreaField, SelectField, FileField
+from wtforms import IntegerField, StringField, TextAreaField, SelectField, FileField, SubmitField
 from wtforms.validators import DataRequired, Optional, ValidationError
 
 class Add_Quest(FlaskForm):
@@ -21,4 +21,7 @@ class Add_Location(FlaskForm):
     desc = TextAreaField("desc")
     image = FileField("image")
     map = FileField("map")
-    
+
+class Searchbar(FlaskForm):
+    search = StringField("search", validators=[DataRequired()])
+    sumbit = SubmitField("submit")

@@ -2,8 +2,16 @@
 {% block nav_quests %}active{% endblock %}
 {% block content %}
 
+<form method="POST" enctype="multipart/form-data">
+
+    {{ form.csrf_token }}
+    {{ form.search }}</br>
+    <input type="submit" value="Submit">
+
+</form>
 
 <ul>
+
     {% for quest in quests %}
     <div class="quests">
         <a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>

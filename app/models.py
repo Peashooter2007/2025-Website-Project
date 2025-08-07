@@ -93,7 +93,6 @@ class Trader(db.Model):
     name = db.Column(db.Text())    
     desc = db.Column(db.Text())
     image = db.Column(db.Text())
-    minidesc = db.Column(db.Text())
 
     quests = db.relationship('Quest', back_populates = 'trader_name')
 
