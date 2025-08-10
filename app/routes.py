@@ -9,8 +9,6 @@ db = SQLAlchemy()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
 db.init_app(app)
 app.secret_key = 'correcthorsebatterystaple'
-WTF_CSRF_ENABLED = True
-WTF_CSRF_SECRET_KEY = 'sup3r_secr3t_passw3rd'
 
 import app.models as models
 from app.forms import Add_Quest, Add_Trader, Add_Location, Searchbar
@@ -63,7 +61,9 @@ def add_quest():
     quest_images = 'app/static/images/quests/'
     traders = models.Trader.query.all()
     form.trader.choices =[(trader.id, trader.name) for trader in traders]
-    if request.method=='POST' and form.validate_on_submit():
+    formpassword = models.Password.query.first()
+    password = formpassword.password
+    if request.method=='POST' and form.validate_on_submit() and form.password.data == password:
         image = request.files['image']
         imagename = secure_filename(form.image.data.filename)
         image.save(quest_images+imagename)
@@ -76,7 +76,7 @@ def add_quest():
         new_quest.image = imagename
         db.session.add(new_quest)
         db.session.commit()
-        return redirect(url_for('quest', id=new_quest.id))        
+        return redirect(url_for('quest', id=new_quest.id))     
     else:
         return render_template('add_quest.html', form=form, page_title="Add a Quest")
 

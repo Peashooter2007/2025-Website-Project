@@ -95,6 +95,10 @@ class Trader(db.Model):
     image = db.Column(db.Text())
 
     quests = db.relationship('Quest', back_populates = 'trader_name')
-
     def __repr__(self):
         return self.name 
+
+class Password(db.Model):
+    __tablename__ = 'Password'
+    password = db.Column(db.Text(), primary_key=True)
+
