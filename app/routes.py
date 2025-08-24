@@ -13,6 +13,11 @@ app.secret_key = 'correcthorsebatterystaple'
 import app.models as models
 from app.forms import Add_Quest, Add_Trader, Add_Location, Searchbar
 
+ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 @app.route('/')
 def root():
     return render_template('home.html', page_title = 'Home')
@@ -84,10 +89,15 @@ def add_quest():
 def add_trader():
     form = Add_Trader()
     trader_images = 'app/static/images/traders/'
-    if request.method=='POST' and form.validate_on_submit():
+    formpassword = models.Password.query.first()
+    password = formpassword.password
+    if request.method=='POST' and form.validate_on_submit() and form.password.data == password:
         image = request.files['image']
-        imagename = secure_filename(form.image.data.filename)
-        image.save(trader_images+imagename)
+        if image and allowed_file(image.filename):
+            imagename = secure_filename(form.image.data.filename)
+            image.save(trader_images+imagename)
+        else:
+            return render_template('add_trader.html', form=form, page_title ="Add a Trader")
         new_trader = models.Trader()
         new_trader.name = form.name.data
         new_trader.desc = form.desc.data
@@ -102,7 +112,9 @@ def add_trader():
 def add_location():
     form = Add_Location()
     location_images = 'app/static/images/locations/'
-    if request.method=='POST' and form.validate_on_submit():
+    formpassword = models.Password.query.first()
+    password = formpassword.password
+    if request.method=='POST' and form.validate_on_submit() and form.password.data == password:
         image = request.files['image']
         imagename = secure_filename(form.image.data.filename)
         image.save(location_images+imagename)

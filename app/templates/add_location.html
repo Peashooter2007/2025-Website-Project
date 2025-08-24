@@ -3,9 +3,15 @@
 <form method="POST" enctype="multipart/form-data">
 
     {{ form.csrf_token }}
+    <p>Password:</p></br>
+    {{form.password}}{{form.password.errors}}</br>
+    <p>Location name:</p></br>
     {{ form.name }}{{ form.name.errors }}</br>
+    <p>Location description:</p></br>
     {{ form.desc }}{{ form.desc.errors }}</br>
+    <p>Location image:</p></br>
     {{ form.image }}{{ form.image.errors }}</br>
+    <p>Location map:</p>
     {{ form.map }}{{ form.map.errors }}<br>
     <input type="submit" value="Submit">
 
