@@ -153,11 +153,10 @@ def add_reward():
         new_reward.item = form.item.data
         new_reward.quest = form.quest.data
         db.session.add(new_reward)
-        db.session.commit
+        db.session.commit()
         return redirect(url_for('quest', id=new_reward.quest))
     else:
         return render_template('add_reward.html', form=form, page_title ="Add a Reward")
-
 
 
 @app.errorhandler(404)
