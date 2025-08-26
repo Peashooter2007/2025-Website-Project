@@ -258,3 +258,12 @@ nav a.active{
   color:#D6D1CB;
   background-color: #323232;
 }
+
+.form-main{
+  margin-left:10px;
+}
+
+.form-main p{
+  margin:5px;
+  margin-left:0;
+}

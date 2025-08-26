@@ -11,7 +11,7 @@ db.init_app(app)
 app.secret_key = 'correcthorsebatterystaple'
 
 import app.models as models
-from app.forms import Add_Quest, Add_Trader, Add_Location, Searchbar
+from app.forms import Add_Quest, Add_Trader, Add_Location, Searchbar, Add_Reward
 
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
 
@@ -70,8 +70,11 @@ def add_quest():
     password = formpassword.password
     if request.method=='POST' and form.validate_on_submit() and form.password.data == password:
         image = request.files['image']
-        imagename = secure_filename(form.image.data.filename)
-        image.save(quest_images+imagename)
+        if image and allowed_file(image.filename):
+            imagename = secure_filename(form.image.data.filename)
+            image.save(quest_images+imagename)
+        else:
+            return render_template('add_trader.html', form=form, page_title ="Add a Trader")
         new_quest = models.Quest()
         new_quest.name = form.name.data
         new_quest.desc = form.desc.data
@@ -116,11 +119,17 @@ def add_location():
     password = formpassword.password
     if request.method=='POST' and form.validate_on_submit() and form.password.data == password:
         image = request.files['image']
-        imagename = secure_filename(form.image.data.filename)
-        image.save(location_images+imagename)
+        if image and allowed_file(image.filename):
+            imagename = secure_filename(form.image.data.filename)
+            image.save(location_images+imagename)
+        else:
+            return render_template('add_location.html', form=form, page_title ="Add a Location")
         map = request.files['map']
-        mapname = secure_filename(form.map.data.filename)
-        map.save(location_images+mapname)
+        if map and allowed_file(map.filename):
+            mapname = secure_filename(form.map.data.filename)
+            map.save(location_images+mapname)
+        else:
+            return render_template('add_location.html', form=form, page_title ="Add a Location")
         new_location = models.Location()
         new_location.name = form.name.data
         new_location.desc = form.desc.data
@@ -131,6 +140,25 @@ def add_location():
         return redirect(url_for('location', id=new_location.id))  
     else:
         return render_template('add_location.html', form=form, page_title ="Add a Location")
+
+@app.route('/add_reward', methods=['GET', 'POST'])
+def add_reward():
+    form = Add_Reward()
+    quests = models.Quest.query.all()
+    form.quest.choices = [(quest.id, quest.name) for quest in quests]
+    formpassword = models.Password.query.first()
+    password = formpassword.password
+    if request.method=='POST' and form.validate_on_submit() and form.password.data == password:
+        new_reward = models.Reward()
+        new_reward.item = form.item.data
+        new_reward.quest = form.quest.data
+        db.session.add(new_reward)
+        db.session.commit
+        return redirect(url_for('quest', id=new_reward.quest))
+    else:
+        return render_template('add_reward.html', form=form, page_title ="Add a Reward")
+
+
 
 @app.errorhandler(404)
 def page_not_found(e):

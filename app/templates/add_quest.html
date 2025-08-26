@@ -3,21 +3,22 @@
 <form method="POST" enctype="multipart/form-data">
 
     {{ form.csrf_token }}
-    <p>Password:</p></br>
-    {{form.password}}{{form.password.errors}}
-    <p>Quest name:</p></br>
-    {{ form.name }}{{ form.name.errors }}</br>
-    <p>Quest description:</p></br>
-    {{ form.desc }}{{ form.desc.errors }}</br>
-    <p>Quest level requirement:</p></br>
-    {{ form.lvl }}{{ form.lvl.errors }}</br>
-    <p>Quest exp reward:</p></br>
-    {{ form.exp }}{{ form.exp.errors }}</br>
-    <p>Quest trader:</p></br>
-    {{ form.trader }}{{ form.trader.errors }}</br>
-    <p>Quest image:</p></br>
-    {{ form.image }}{{ form.image.errors }}<br>
-    <input type="submit" value="Submit">
-
+    <div class="form-main">
+        <p>Password:</p>
+        {{form.password}}{{form.password.errors}}
+        <p>Quest name:</p>
+        {{ form.name }}{{ form.name.errors }}</br>
+        <p>Quest description:</p>
+        {{ form.desc }}{{ form.desc.errors }}</br>
+        <p>Quest level requirement:</p>
+        {{ form.lvl }}{{ form.lvl.errors }}</br>
+        <p>Quest exp reward:</p>
+        {{ form.exp }}{{ form.exp.errors }}</br>
+        <p>Quest trader:</p>
+        {{ form.trader }}{{ form.trader.errors }}</br>
+        <p>Quest image:</p>
+        {{ form.image }}{{ form.image.errors }}<br>
+        <input type="submit" value="Submit">
+    </div>
 </form>
 {% endblock %}

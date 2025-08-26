@@ -25,6 +25,11 @@ class Add_Location(FlaskForm):
     map = FileField("map")
     password = PasswordField("password", validators=[DataRequired()])
 
+class Add_Reward(FlaskForm):
+    item = StringField("item", validators=[DataRequired()])
+    quest = SelectField("quest", validators=[DataRequired()])
+    password = PasswordField("password", validators=[DataRequired()])
+
 class Searchbar(FlaskForm):
     search = StringField("search", validators=[DataRequired()])
-    sumbit = SubmitField("submit")
+    submit = SubmitField("submit")
