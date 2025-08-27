@@ -38,9 +38,7 @@ class Quest(db.Model):
 
     locations = db.relationship('Location', secondary = QuestLocation, back_populates = 'quests')
 
-    rep = db.relationship('Rep', secondary = QuestRep, back_populates = 'quests')
-
-    objectives = db.relationship('Objective', secondary = QuestObjective, back_populates = 'quests')
+    objectives = db.relationship('Objective', back_populates = 'quest_name')
 
     subsequent = db.relationship('Quest', secondary = Order, primaryjoin = (Order.c.previous == id), secondaryjoin = (Order.c.subsequent == id), back_populates = 'previous')
 
@@ -68,16 +66,9 @@ class Objective(db.Model):
     __tablename__ = 'Objective'
     id = db.Column(db.Integer, primary_key=True) 
     desc = db.Column(db.Text())
+    quest = db.Column(db.Integer, db.ForeignKey('Quest.id'))
 
-    quests = db.relationship('Quest', secondary = QuestObjective, back_populates = 'objectives')
-
-
-class Rep(db.Model):
-    __tablename__ = 'Rep'
-    id = db.Column(db.Integer, primary_key=True) 
-    rep = db.Column(db.Text())
-
-    quests = db.relationship('Quest', secondary = QuestRep, back_populates = 'rep')
+    quest_name = db.relationship('Quest', back_populates = 'objectives')
 
 class Reward(db.Model):
     __tablename__ = 'Reward'

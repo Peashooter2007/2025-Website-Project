@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+
+    {{ form.csrf_token }}
+    <div class="form-main">
+        <p>Password:</p>
+        {{form.password}}{{form.password.errors}}</br>
+        <p>Quest:</p>
+        {{ form.quest }}{{ form.quest.errors }}</br>
+        <input type="submit" value="Delete">
+    </div>
+</form>
+{% endblock %}

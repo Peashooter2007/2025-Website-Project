@@ -47,13 +47,10 @@
     <p>Rewards:</p>
     <ul>
         <li>+{{ quest.exp }} exp</li>
-        {% for rep in quest.rep %}
-            <li>{{ rep.rep }}</li>
-        {% endfor %}
         {% for reward in quest.rewards %}
             <li>{{ reward.item }}</li>
         {% endfor %}
-        
+        <li><a href="/add_reward">+ Add New Reward</a></li>
     </ul>
 </div>
 

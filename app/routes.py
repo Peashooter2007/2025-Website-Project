@@ -11,7 +11,7 @@ db.init_app(app)
 app.secret_key = 'correcthorsebatterystaple'
 
 import app.models as models
-from app.forms import Add_Quest, Add_Trader, Add_Location, Searchbar, Add_Reward
+from app.forms import Add_Quest, Add_Trader, Add_Location, Searchbar, Add_Reward, Delete_Quest
 
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
 
@@ -74,7 +74,7 @@ def add_quest():
             imagename = secure_filename(form.image.data.filename)
             image.save(quest_images+imagename)
         else:
-            return render_template('add_trader.html', form=form, page_title ="Add a Trader")
+            return render_template('add_quest.html', form=form, page_title ="Add a Quest")
         new_quest = models.Quest()
         new_quest.name = form.name.data
         new_quest.desc = form.desc.data
@@ -158,7 +158,21 @@ def add_reward():
     else:
         return render_template('add_reward.html', form=form, page_title ="Add a Reward")
 
+@app.route('/delete_quest', methods=['GET', 'POST']) 
+def delete_quest():
+    form = Delete_Quest()
+    quests = models.Quest.query.all()
+    form.quest.choices = [(quest.id, quest.name) for quest in quests]
+    formpassword = models.Password.query.first()
+    password = formpassword.password
+    if request.method=='POST' and form.validate_on_submit() and form.password.data == password:
+        quest = db.session.query(models.Quest).filter(models.Quest.id==form.quest.data).first_or_404()
+        db.session.delete(quest)
+        db.session.commit()
+        return redirect(url_for('quests'))
+    else:
+        return render_template('delete_quest.html', form=form, page_title="Delete a Quest")
 
 @app.errorhandler(404)
-def page_not_found(e):
+def page_not_found(e): 
     return('No Such Webpage!')

@@ -30,6 +30,10 @@ class Add_Reward(FlaskForm):
     quest = SelectField("quest", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
 
+class Delete_Quest(FlaskForm):
+    quest = SelectField("quest", validators=[DataRequired()])
+    password = PasswordField("password", validators=[DataRequired()])
+
 class Searchbar(FlaskForm):
     search = StringField("search", validators=[DataRequired()])
     submit = SubmitField("submit")
