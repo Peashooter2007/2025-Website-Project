@@ -11,7 +11,7 @@ db.init_app(app)
 app.secret_key = 'correcthorsebatterystaple'
 
 import app.models as models
-from app.forms import Add_Quest, Add_Trader, Add_Location, Searchbar, Add_Reward, Delete_Quest, Delete_Trader, Delete_Location, Add_Objective, Connect_Location
+from app.forms import Add_Quest, Add_Trader, Add_Location, Searchbar, Add_Reward, Delete_Quest, Delete_Trader, Delete_Location, Add_Objective, Connect_Location, Connect_Quests
 
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
 
@@ -193,6 +193,24 @@ def connect_location():
         return render_template('connect_location.html', form=form, page_title ="Add an Location")
     else:
         return render_template('connect_location.html', form=form, page_title ="Add an Location")
+
+@app.route('/connect_quests',  methods=['GET', 'POST'])
+def connect_quests():
+    form = Connect_Quests()
+    quests = models.Quest.query.all()
+    form.previous.choices = [(quest.id, quest.name) for quest in quests]
+    form.subsequent.choices = [(quest.id, quest.name) for quest in quests]
+    formpassword = models.Password.query.first()
+    password = formpassword.password
+    if request.method=='POST' and form.validate_on_submit() and form.password.data == password:
+        previous = models.Quest.query.filter_by(id=form.previous.data).first()
+        subsequent = models.Quest.query.filter_by(id=form.subsequent.data).first()
+        previous.subsequent.append(subsequent)
+        db.session.add(previous)
+        db.session.commit()
+        return render_template('connect_quests.html', form=form, page_title ="Connect Quests")
+    else:
+        return render_template('connect_quests.html', form=form, page_title ="Connect_quests")
 
 @app.route('/delete_quest', methods=['GET', 'POST']) 
 def delete_quest():

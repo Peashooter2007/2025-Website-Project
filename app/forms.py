@@ -41,6 +41,11 @@ class Connect_Location(FlaskForm):
     location = SelectField("location", validators=[DataRequired()])   
     password = PasswordField("password", validators=[DataRequired()])
 
+class Connect_Quests(FlaskForm):
+    previous = SelectField("previous", validators=[DataRequired()]) 
+    subsequent = SelectField("subsequent", validators=[DataRequired()])   
+    password = PasswordField("password", validators=[DataRequired()])
+
 class Delete_Quest(FlaskForm):
     quest = SelectField("quest", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
