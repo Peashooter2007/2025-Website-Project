@@ -35,6 +35,7 @@
         {% for location in quest.locations %}
             <li><a href="/location/{{ location.id }}">{{ location.name }}</a></li>
         {% endfor %}
+         <li><a href="/connect_location">+ Add Location</a></li>
     </ul>
 
     <p>Objectives:</p>
@@ -42,6 +43,7 @@
         {% for objective in quest.objectives %}
             <li>{{ objective.desc }}</li>
         {% endfor %}
+        <li><a href="/add_objective">+ Add New Objective</a></li>
     </ul>
 
     <p>Rewards:</p>

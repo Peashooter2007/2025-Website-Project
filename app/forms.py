@@ -30,6 +30,17 @@ class Add_Reward(FlaskForm):
     quest = SelectField("quest", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
 
+class Add_Objective(FlaskForm):
+    desc = StringField("desc", validators=[DataRequired()])
+    quest = SelectField("quest", validators=[DataRequired()])
+    password = PasswordField("password", validators=[DataRequired()])
+
+
+class Connect_Location(FlaskForm):
+    quest = SelectField("quest", validators=[DataRequired()]) 
+    location = SelectField("location", validators=[DataRequired()])   
+    password = PasswordField("password", validators=[DataRequired()])
+
 class Delete_Quest(FlaskForm):
     quest = SelectField("quest", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
@@ -41,7 +52,6 @@ class Delete_Trader(FlaskForm):
 class Delete_Location(FlaskForm):
     location = SelectField("location", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
-
 
 class Searchbar(FlaskForm):
     search = StringField("search", validators=[DataRequired()])

@@ -11,7 +11,7 @@ db.init_app(app)
 app.secret_key = 'correcthorsebatterystaple'
 
 import app.models as models
-from app.forms import Add_Quest, Add_Trader, Add_Location, Searchbar, Add_Reward, Delete_Quest, Delete_Trader, Delete_Location
+from app.forms import Add_Quest, Add_Trader, Add_Location, Searchbar, Add_Reward, Delete_Quest, Delete_Trader, Delete_Location, Add_Objective, Connect_Location
 
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
 
@@ -157,6 +157,42 @@ def add_reward():
         return redirect(url_for('quest', id=new_reward.quest))
     else:
         return render_template('add_reward.html', form=form, page_title ="Add a Reward")
+
+@app.route('/add_objective', methods=['GET', 'POST'])
+def add_objective():
+    form = Add_Objective()
+    quests = models.Quest.query.all()
+    form.quest.choices = [(quest.id, quest.name) for quest in quests]
+    formpassword = models.Password.query.first()
+    password = formpassword.password
+    if request.method=='POST' and form.validate_on_submit() and form.password.data == password:
+        new_objective = models.Objective()
+        new_objective.desc = form.desc.data
+        new_objective.quest = form.quest.data
+        db.session.add(new_objective)
+        db.session.commit()
+        return redirect(url_for('quest', id=new_objective.quest))
+    else:
+        return render_template('add_objective.html', form=form, page_title ="Add an Objective")
+
+@app.route('/connect_location',  methods=['GET', 'POST'])
+def connect_location():
+    form = Connect_Location()
+    quests = models.Quest.query.all()
+    form.quest.choices = [(quest.id, quest.name) for quest in quests]
+    locations = models.Location.query.all()
+    form.location.choices = [(location.id, location.name) for location in locations]
+    formpassword = models.Password.query.first()
+    password = formpassword.password
+    if request.method=='POST' and form.validate_on_submit() and form.password.data == password:
+        quest = models.Quest.query.filter_by(id=form.quest.data).first()
+        location = models.Location.query.filter_by(id=form.location.data).first()
+        quest.locations.append(location)
+        db.session.add(quest)
+        db.session.commit()
+        return render_template('connect_location.html', form=form, page_title ="Add an Location")
+    else:
+        return render_template('connect_location.html', form=form, page_title ="Add an Location")
 
 @app.route('/delete_quest', methods=['GET', 'POST']) 
 def delete_quest():

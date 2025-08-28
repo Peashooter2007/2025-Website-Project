@@ -1,21 +1,9 @@
 from app.routes import db
 
-
 QuestLocation = db.Table('QuestLocation',
     db.Column('qid', db.Integer, db.ForeignKey('Quest.id')),
     db.Column('lid', db.Integer, db.ForeignKey('Location.id'))
 )
-
-QuestObjective = db.Table('QuestObjective',
-    db.Column('qid', db.Integer, db.ForeignKey('Quest.id')),
-    db.Column('oid', db.Integer, db.ForeignKey('Objective.id'))
-)
-
-QuestRep = db.Table('QuestRep',
-    db.Column('qid', db.Integer, db.ForeignKey('Quest.id')),
-    db.Column('rid', db.Integer, db.ForeignKey('Rep.id'))
-)
-
 
 Order = db.Table('Order',
     db.Column('previous', db.Integer, db.ForeignKey('Quest.id')),
@@ -92,4 +80,3 @@ class Trader(db.Model):
 class Password(db.Model):
     __tablename__ = 'Password'
     password = db.Column(db.Text(), primary_key=True)
-
