@@ -11,7 +11,7 @@ db.init_app(app)
 app.secret_key = 'correcthorsebatterystaple'
 
 import app.models as models
-from app.forms import Add_Quest, Add_Trader, Add_Location, Searchbar, Add_Reward, Delete_Quest
+from app.forms import Add_Quest, Add_Trader, Add_Location, Searchbar, Add_Reward, Delete_Quest, Delete_Trader, Delete_Location
 
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
 
@@ -172,6 +172,36 @@ def delete_quest():
         return redirect(url_for('quests'))
     else:
         return render_template('delete_quest.html', form=form, page_title="Delete a Quest")
+
+@app.route('/delete_trader', methods=['GET', 'POST']) 
+def delete_trader():
+    form = Delete_Trader()
+    traders = models.Trader.query.all()
+    form.trader.choices = [(trader.id, trader.name) for trader in traders]
+    formpassword = models.Password.query.first()
+    password = formpassword.password
+    if request.method=='POST' and form.validate_on_submit() and form.password.data == password:
+        trader = db.session.query(models.Trader).filter(models.Trader.id==form.trader.data).first_or_404()
+        db.session.delete(trader)
+        db.session.commit()
+        return redirect(url_for('traders'))
+    else:
+        return render_template('delete_trader.html', form=form, page_title="Delete a Trader")
+
+@app.route('/delete_location', methods=['GET', 'POST']) 
+def delete_location():
+    form = Delete_Location()
+    location = models.Location.query.all()
+    form.location.choices = [(location.id, location.name) for location in location]
+    formpassword = models.Password.query.first()
+    password = formpassword.password
+    if request.method=='POST' and form.validate_on_submit() and form.password.data == password:
+        location = db.session.query(models.Location).filter(models.Location.id==form.location.data).first_or_404()
+        db.session.delete(location)
+        db.session.commit()
+        return redirect(url_for('locations'))
+    else:
+        return render_template('delete_location.html', form=form, page_title="Delete a Location")
 
 @app.errorhandler(404)
 def page_not_found(e): 

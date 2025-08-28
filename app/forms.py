@@ -34,6 +34,15 @@ class Delete_Quest(FlaskForm):
     quest = SelectField("quest", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
 
+class Delete_Trader(FlaskForm):
+    trader = SelectField("trader", validators=[DataRequired()])
+    password = PasswordField("password", validators=[DataRequired()])
+
+class Delete_Location(FlaskForm):
+    location = SelectField("location", validators=[DataRequired()])
+    password = PasswordField("password", validators=[DataRequired()])
+
+
 class Searchbar(FlaskForm):
     search = StringField("search", validators=[DataRequired()])
     submit = SubmitField("submit")
