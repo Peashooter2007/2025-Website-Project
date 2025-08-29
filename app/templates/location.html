@@ -21,5 +21,6 @@
             <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
         {% endfor %}
     </ul>
+    <a href="{{ url_for('delete_location', location_id=location.id) }}">- Delete Location</a>
 </div>
 {% endblock %}

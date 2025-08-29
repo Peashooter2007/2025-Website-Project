@@ -36,7 +36,7 @@
         {% for location in quest.locations %}
             <li><a href="/location/{{ location.id }}">{{ location.name }}</a></li>
         {% endfor %}
-         <li><a href="/connect_location">+ Add Location</a></li>
+         <li><a href="{{ url_for('connect_location', quest_id=quest.id) }}">+ Add Location</a></li>
     </ul>
 
     <p>Objectives:</p>
@@ -44,7 +44,7 @@
         {% for objective in quest.objectives %}
             <li>{{ objective.desc }}</li>
         {% endfor %}
-        <li><a href="/add_objective">+ Add New Objective</a></li>
+        <li><a href="{{ url_for('add_objective', quest_id=quest.id) }}">+ Add New Objective</a></li>
     </ul>
 
     <p>Rewards:</p>
@@ -53,8 +53,9 @@
         {% for reward in quest.rewards %}
             <li>{{ reward.item }}</li>
         {% endfor %}
-        <li><a href="/add_reward">+ Add New Reward</a></li>
+        <li><a href="{{ url_for('add_reward', quest_id=quest.id) }}">+ Add New Reward</a></li>
     </ul>
+    <a href="{{ url_for('delete_quest', quest_id=quest.id) }}">- Delete Quest</a>
 </div>
 
 {% endblock %}

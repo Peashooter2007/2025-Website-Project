@@ -143,7 +143,8 @@ def add_location():
 
 @app.route('/add_reward', methods=['GET', 'POST'])
 def add_reward():
-    form = Add_Reward()
+    quest_id_from_query = request.args.get('quest_id', type=int)
+    form = Add_Reward(quest=quest_id_from_query)
     quests = models.Quest.query.all()
     form.quest.choices = [(quest.id, quest.name) for quest in quests]
     formpassword = models.Password.query.first()
@@ -160,7 +161,8 @@ def add_reward():
 
 @app.route('/add_objective', methods=['GET', 'POST'])
 def add_objective():
-    form = Add_Objective()
+    quest_id_from_query = request.args.get('quest_id', type=int)
+    form = Add_Objective(quest=quest_id_from_query)
     quests = models.Quest.query.all()
     form.quest.choices = [(quest.id, quest.name) for quest in quests]
     formpassword = models.Password.query.first()
@@ -177,7 +179,8 @@ def add_objective():
 
 @app.route('/connect_location',  methods=['GET', 'POST'])
 def connect_location():
-    form = Connect_Location()
+    quest_id_from_query = request.args.get('quest_id', type=int)
+    form = Connect_Location(quest=quest_id_from_query)
     quests = models.Quest.query.all()
     form.quest.choices = [(quest.id, quest.name) for quest in quests]
     locations = models.Location.query.all()
@@ -190,7 +193,7 @@ def connect_location():
         quest.locations.append(location)
         db.session.add(quest)
         db.session.commit()
-        return render_template('connect_location.html', form=form, page_title ="Add an Location")
+        return redirect(url_for('quest', id=quest.id))
     else:
         return render_template('connect_location.html', form=form, page_title ="Add an Location")
 
@@ -208,13 +211,14 @@ def connect_quests():
         previous.subsequent.append(subsequent)
         db.session.add(previous)
         db.session.commit()
-        return render_template('connect_quests.html', form=form, page_title ="Connect Quests")
+        return redirect(url_for('quest', id=previous.id))
     else:
         return render_template('connect_quests.html', form=form, page_title ="Connect_quests")
 
 @app.route('/delete_quest', methods=['GET', 'POST']) 
 def delete_quest():
-    form = Delete_Quest()
+    quest_id_from_query = request.args.get('quest_id', type=int)
+    form = Delete_Quest(quest=quest_id_from_query)
     quests = models.Quest.query.all()
     form.quest.choices = [(quest.id, quest.name) for quest in quests]
     formpassword = models.Password.query.first()
@@ -229,7 +233,8 @@ def delete_quest():
 
 @app.route('/delete_trader', methods=['GET', 'POST']) 
 def delete_trader():
-    form = Delete_Trader()
+    trader_id_from_query = request.args.get('trader_id', type=int)
+    form = Delete_Trader(trader=trader_id_from_query)
     traders = models.Trader.query.all()
     form.trader.choices = [(trader.id, trader.name) for trader in traders]
     formpassword = models.Password.query.first()
@@ -244,7 +249,8 @@ def delete_trader():
 
 @app.route('/delete_location', methods=['GET', 'POST']) 
 def delete_location():
-    form = Delete_Location()
+    location_id_from_query = request.args.get('location_id', type=int)
+    form = Delete_Location(location=location_id_from_query)
     location = models.Location.query.all()
     form.location.choices = [(location.id, location.name) for location in location]
     formpassword = models.Password.query.first()
