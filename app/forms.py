@@ -5,10 +5,10 @@ from wtforms.validators import DataRequired, Optional, ValidationError
 
 class Add_Quest(FlaskForm):
     name = StringField("name", validators=[DataRequired()])
-    desc = TextAreaField("desc")
+    desc = TextAreaField("desc", validators=[DataRequired()])
     lvl = IntegerField("lvl")
     exp = IntegerField("exp")
-    trader = SelectField('trader')
+    trader = SelectField('trader', validators=[DataRequired()])
     image = FileField("image")
     password = PasswordField("password", validators=[DataRequired()])
 
@@ -26,12 +26,12 @@ class Add_Location(FlaskForm):
     password = PasswordField("password", validators=[DataRequired()])
 
 class Add_Reward(FlaskForm):
-    item = StringField("item", validators=[DataRequired()])
+    item = TextAreaField("item", validators=[DataRequired()])
     quest = SelectField("quest", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
 
 class Add_Objective(FlaskForm):
-    desc = StringField("desc", validators=[DataRequired()])
+    desc = TextAreaField("desc", validators=[DataRequired()])
     quest = SelectField("quest", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
 
@@ -59,5 +59,5 @@ class Delete_Location(FlaskForm):
     password = PasswordField("password", validators=[DataRequired()])
 
 class Searchbar(FlaskForm):
-    search = StringField("search", validators=[DataRequired()])
+    search = StringField("search")
     submit = SubmitField("submit")

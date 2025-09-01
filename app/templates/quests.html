@@ -1,14 +1,14 @@
 {% extends 'layout.html' %}
 {% block nav_quests %}active{% endblock %}
 {% block content %}
+<div class="search">
+    <form method="POST" enctype="multipart/form-data">
 
-<form method="POST" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        {{ form.search }}
 
-    {{ form.csrf_token }}
-    {{ form.search }}</br>
-
-</form>
-
+    </form>
+</div>
 <ul>
 
     {% for quest in quests %}
