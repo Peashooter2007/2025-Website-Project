@@ -28,6 +28,7 @@ body {
   font-size:21vh;
 }
 
+/* navbar */
 nav {
   background-color:#323232;
   text-align: center;
@@ -56,6 +57,7 @@ nav a.active{
   box-shadow: 0 2.75px 0 0 #B76925;
 }   
 
+/* location page */
 .location-images{
   justify-content: space-around;
   align-items: center;
@@ -72,6 +74,7 @@ nav a.active{
   margin-left:20px;
 }
 
+/* trader page */
 .trader-body{
   display:flex;
   justify-content: left;
@@ -87,6 +90,7 @@ nav a.active{
   margin-left:20px;
 }
 
+/* quest page */
 .quest-body{
   display:flex;
   justify-content: left;
@@ -142,9 +146,20 @@ nav a.active{
   margin-left:20px;
 }
 
+/* quest list page */
 .search{
   margin-left:40px;
   margin-top:5px;
+}
+
+.search input{
+  width:96.5%;
+  height:25px;
+  background-image: url('/static/images/searchicon.png');
+  background-size: 25px 25px;
+  background-position: 0px 0px;
+  background-repeat: no-repeat;
+  padding-left: 25px;
 }
 
 .quests {
@@ -169,6 +184,7 @@ nav a.active{
   color: #323232;
 }
 
+/* trader list page */
 .trader-list{
   width:100%;
 }
@@ -215,6 +231,7 @@ nav a.active{
   background-color: #323232;
 }
 
+/* location list page */
 .location-list{
   width:100%;
 }
@@ -264,6 +281,7 @@ nav a.active{
   background-color: #323232;
 }
 
+/* form pages */
 .form-main{
   margin-left:10px;
 }
@@ -271,4 +289,8 @@ nav a.active{
 .form-main p{
   margin:5px;
   margin-left:0;
+}
+
+.error-message{
+  color:rgb(255, 118, 146);
 }

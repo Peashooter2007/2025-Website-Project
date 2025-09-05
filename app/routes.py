@@ -10,55 +10,65 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'da
 db.init_app(app)
 app.secret_key = 'correcthorsebatterystaple'
 
-import app.models as models
+import app.models as models  # NOQA
 from app.forms import Add_Quest, Add_Trader, Add_Location, Searchbar, Add_Reward, Delete_Quest, Delete_Trader, Delete_Location, Add_Objective, Connect_Location, Connect_Quests
 
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
 
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 @app.route('/')
 def root():
-    return render_template('home.html', page_title = 'Home')
+    return render_template('home.html', page_title='Home')
 
-@app.route('/quests', methods = ['GET', 'POST'])
+
+@app.route('/quests', methods=['GET', 'POST'])
 def quests():
     quests = models.Quest.query.all()
     form = Searchbar()
     if form.validate_on_submit():
         search_query = form.search.data
         quests = models.Quest.query.filter(models.Quest.name.ilike(f'%{search_query}%')).all()
-    return render_template('quests.html', quests=quests, page_title = 'Quests', form=form)
+    return render_template('quests.html', quests=quests, page_title='Quests', form=form)
+
 
 @app.route('/traders')
 def traders():
     traders = models.Trader.query.all()
-    return render_template('traders.html', traders=traders, page_title = 'Traders')
+    return render_template('traders.html', traders=traders, page_title='Traders')
+
 
 @app.route('/locations')
 def locations():
     locations = models.Location.query.all()
-    return render_template('locations.html', locations=locations, page_title = 'Locations')
+    return render_template('locations.html', locations=locations, page_title='Locations')
+
 
 @app.route('/quest/<int:id>')
 def quest(id):
     quest = models.Quest.query.filter_by(id=id).first_or_404()
-    return render_template('quest.html', quest=quest, page_title = quest)   
+    return render_template('quest.html', quest=quest, page_title=quest)   
+
 
 @app.route('/trader/<int:id>')
 def trader(id):
     trader = models.Trader.query.filter_by(id=id).first_or_404()
-    return render_template('trader.html', trader=trader, page_title = trader)
+    return render_template('trader.html', trader=trader, page_title=trader)
+
 
 @app.route('/location/<int:id>')
 def location(id):
     location = models.Location.query.filter_by(id=id).first_or_404()
-    return render_template('location.html', location=location, page_title = location)
+    return render_template('location.html', location=location, page_title=location)
+
 
 @app.route('/edit')
 def edit():
-    return render_template('edit.html', page_title = "Edit")
+    return render_template('edit.html', page_title="Edit")
+
 
 @app.route('/add_quest', methods=['GET', 'POST'])
 def add_quest():
@@ -68,7 +78,7 @@ def add_quest():
     form.trader.choices =[(trader.id, trader.name) for trader in traders]
     formpassword = models.Password.query.first()
     password = formpassword.password
-    if request.method=='POST' and form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         if form.password.data == password:
             image = request.files['image']
             if image and allowed_file(image.filename):
@@ -76,7 +86,7 @@ def add_quest():
                 image.save(quest_images+imagename)
             else:
                 file_error = "Wrong file type. Please upload a pdf, png, jpg, or jpeg."
-                return render_template('add_quest.html', form=form, file_error=file_error, page_title ="Add a Quest")
+                return render_template('add_quest.html', form=form, file_error=file_error, page_title="Add a Quest")
             new_quest = models.Quest()
             new_quest.name = form.name.data
             new_quest.desc = form.desc.data
@@ -89,9 +99,10 @@ def add_quest():
             return redirect(url_for('quest', id=new_quest.id))     
         else:
             password_error = "Password is incorrect"
-            return render_template('add_quest.html', form=form, password_error=password_error, page_title ="Add a Quest")
+            return render_template('add_quest.html', form=form, password_error=password_error, page_title="Add a Quest")
     else:
         return render_template('add_quest.html', form=form, page_title="Add a Quest")
+
 
 @app.route('/add_trader', methods=['GET', 'POST'])
 def add_trader():
@@ -99,7 +110,7 @@ def add_trader():
     trader_images = 'app/static/images/traders/'
     formpassword = models.Password.query.first()
     password = formpassword.password
-    if request.method=='POST' and form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         if form.password.data == password:
             image = request.files['image']
             if image and allowed_file(image.filename):
@@ -107,7 +118,7 @@ def add_trader():
                 image.save(trader_images+imagename)
             else:
                 file_error = "Wrong file type. Please upload a pdf, png, jpg, or jpeg."
-                return render_template('add_trader.html', form=form, file_error=file_error, page_title ="Add a Trader")
+                return render_template('add_trader.html', form=form, file_error=file_error, page_title="Add a Trader")
             new_trader = models.Trader()
             new_trader.name = form.name.data
             new_trader.desc = form.desc.data
@@ -117,17 +128,18 @@ def add_trader():
             return redirect(url_for('trader', id=new_trader.id))
         else:
             password_error = "Password is incorrect"
-            return render_template('add_trader.html', form=form, password_error=password_error, page_title ="Add a Trader")
+            return render_template('add_trader.html', form=form, password_error=password_error, page_title="Add a Trader")
     else:
         return render_template('add_trader.html', form=form, page_title ="Add a Trader")
     
+
 @app.route('/add_location', methods=['GET', 'POST'])
 def add_location():
     form = Add_Location()
     location_images = 'app/static/images/locations/'
     formpassword = models.Password.query.first()
     password = formpassword.password
-    if request.method=='POST' and form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         if form.password.data == password:
             image = request.files['image']
             if image and allowed_file(image.filename):
@@ -135,7 +147,7 @@ def add_location():
                 image.save(location_images+imagename)
             else:
                 file_error = "Wrong file type. Please upload a pdf, png, jpg, or jpeg."
-                return render_template('add_location.html', form=form, file_error=file_error, page_title ="Add a Location")
+                return render_template('add_location.html', form=form, file_error=file_error, page_title="Add a Location")
             map = request.files['map']
             if map and allowed_file(map.filename):
                 mapname = secure_filename(form.map.data.filename)
@@ -152,9 +164,10 @@ def add_location():
             return redirect(url_for('location', id=new_location.id))  
         else:
             password_error = "Password is incorrect"
-            return render_template('add_location.html', form=form, password_error=password_error, page_title ="Add a Location")
+            return render_template('add_location.html', form=form, password_error=password_error, page_title="Add a Location")
     else:
         return render_template('add_location.html', form=form, page_title ="Add a Location")
+
 
 @app.route('/add_reward', methods=['GET', 'POST'])
 def add_reward():
@@ -164,7 +177,7 @@ def add_reward():
     form.quest.choices = [(quest.id, quest.name) for quest in quests]
     formpassword = models.Password.query.first()
     password = formpassword.password
-    if request.method=='POST' and form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         if form.password.data == password:
             new_reward = models.Reward()
             new_reward.item = form.item.data
@@ -174,9 +187,10 @@ def add_reward():
             return redirect(url_for('quest', id=new_reward.quest))
         else:
             password_error = "Password is incorrect"
-            return render_template('add_reward.html', form=form, password_error=password_error, page_title ="Add a Reward")
+            return render_template('add_reward.html', form=form, password_error=password_error, page_title="Add a Reward")
     else:
         return render_template('add_reward.html', form=form, page_title ="Add a Reward")
+
 
 @app.route('/add_objective', methods=['GET', 'POST'])
 def add_objective():
@@ -186,7 +200,7 @@ def add_objective():
     form.quest.choices = [(quest.id, quest.name) for quest in quests]
     formpassword = models.Password.query.first()
     password = formpassword.password
-    if request.method=='POST' and form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         if form.password.data == password:
             new_objective = models.Objective()
             new_objective.desc = form.desc.data
@@ -196,9 +210,10 @@ def add_objective():
             return redirect(url_for('quest', id=new_objective.quest))
         else:
             password_error = "Password is incorrect"
-            return render_template('add_objective.html', form=form, password_error=password_error, page_title ="Add an Objective")
+            return render_template('add_objective.html', form=form, password_error=password_error, page_title="Add an Objective")
     else:
         return render_template('add_objective.html', form=form, page_title ="Add an Objective")
+
 
 @app.route('/connect_location',  methods=['GET', 'POST'])
 def connect_location():
@@ -210,7 +225,7 @@ def connect_location():
     form.location.choices = [(location.id, location.name) for location in locations]
     formpassword = models.Password.query.first()
     password = formpassword.password
-    if request.method=='POST' and form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         if form.password.data == password:
             quest = models.Quest.query.filter_by(id=form.quest.data).first()
             location = models.Location.query.filter_by(id=form.location.data).first()
@@ -220,9 +235,10 @@ def connect_location():
             return redirect(url_for('quest', id=quest.id))
         else:
             password_error = "Password is incorrect"
-            return render_template('connect_location.html', form=form, password_error=password_error, page_title ="Add a Location")
+            return render_template('connect_location.html', form=form, password_error=password_error, page_title="Add a Location")
     else:
         return render_template('connect_location.html', form=form, page_title ="Add a Location")
+
 
 @app.route('/connect_quests',  methods=['GET', 'POST'])
 def connect_quests():
@@ -232,7 +248,7 @@ def connect_quests():
     form.subsequent.choices = [(quest.id, quest.name) for quest in quests]
     formpassword = models.Password.query.first()
     password = formpassword.password
-    if request.method=='POST' and form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         if form.password.data == password:
             previous = models.Quest.query.filter_by(id=form.previous.data).first()
             subsequent = models.Quest.query.filter_by(id=form.subsequent.data).first()
@@ -242,9 +258,10 @@ def connect_quests():
             return redirect(url_for('quest', id=previous.id))
         else:
             password_error = "Password is incorrect"
-            return render_template('connect_quests.html', form=form, password_error=password_error, page_title ="Connect Quests")
+            return render_template('connect_quests.html', form=form, password_error=password_error, page_title="Connect Quests")
     else:
         return render_template('connect_quests.html', form=form, page_title ="Connect Quests")
+
 
 @app.route('/delete_quest', methods=['GET', 'POST']) 
 def delete_quest():
@@ -254,7 +271,7 @@ def delete_quest():
     form.quest.choices = [(quest.id, quest.name) for quest in quests]
     formpassword = models.Password.query.first()
     password = formpassword.password
-    if request.method=='POST' and form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         if form.password.data == password:
             quest = db.session.query(models.Quest).filter(models.Quest.id==form.quest.data).first_or_404()
             db.session.delete(quest)
@@ -262,9 +279,10 @@ def delete_quest():
             return redirect(url_for('quests'))
         else:
             password_error = "Password is incorrect"
-            return render_template('delete_quests.html', form=form, password_error=password_error, page_title ="Delete a Quest")
+            return render_template('delete_quests.html', form=form, password_error=password_error, page_title="Delete a Quest")
     else:
         return render_template('delete_quest.html', form=form, page_title="Delete a Quest")
+
 
 @app.route('/delete_trader', methods=['GET', 'POST']) 
 def delete_trader():
@@ -274,7 +292,7 @@ def delete_trader():
     form.trader.choices = [(trader.id, trader.name) for trader in traders]
     formpassword = models.Password.query.first()
     password = formpassword.password
-    if request.method=='POST' and form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         if form.password.data == password:
             trader = db.session.query(models.Trader).filter(models.Trader.id==form.trader.data).first_or_404()
             db.session.delete(trader)
@@ -282,9 +300,10 @@ def delete_trader():
             return redirect(url_for('traders'))
         else:
             password_error = "Password is incorrect"
-            return render_template('delete_trader.html', form=form, password_error=password_error, page_title ="Delete a Trader")
+            return render_template('delete_trader.html', form=form, password_error=password_error, page_title="Delete a Trader")
     else:
         return render_template('delete_trader.html', form=form, page_title="Delete a Trader")
+
 
 @app.route('/delete_location', methods=['GET', 'POST']) 
 def delete_location():
@@ -294,7 +313,7 @@ def delete_location():
     form.location.choices = [(location.id, location.name) for location in location]
     formpassword = models.Password.query.first()
     password = formpassword.password
-    if request.method=='POST' and form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         if form.password.data == password:
             location = db.session.query(models.Location).filter(models.Location.id==form.location.data).first_or_404()
             db.session.delete(location)
@@ -302,10 +321,11 @@ def delete_location():
             return redirect(url_for('locations'))
         else:
             password_error = "Password is incorrect"
-            return render_template('delete_location.html', form=form, password_error=password_error, page_title ="Delete a Location")
+            return render_template('delete_location.html', form=form, password_error=password_error, page_title="Delete a Location")
     else:
         return render_template('delete_location.html', form=form, page_title="Delete a Location")
 
+
 @app.errorhandler(404)
 def page_not_found(e): 
-    return('No Such Webpage!')
+    return render_template('404.html')

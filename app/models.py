@@ -10,6 +10,7 @@ Order = db.Table('Order',
     db.Column('subsequent', db.Integer, db.ForeignKey('Quest.id'))
 )
 
+
 class Quest(db.Model):
     __tablename__ = 'Quest'
     id = db.Column(db.Integer, primary_key=True)
@@ -20,17 +21,17 @@ class Quest(db.Model):
     image = db.Column(db.Text())
     trader = db.Column(db.Integer, db.ForeignKey('Trader.id'))
 
-    trader_name = db.relationship('Trader', back_populates = 'quests')
+    trader_name = db.relationship('Trader', back_populates='quests')
 
-    rewards = db.relationship('Reward', back_populates = 'quest_name')
+    rewards = db.relationship('Reward', back_populates='quest_name')
 
-    locations = db.relationship('Location', secondary = QuestLocation, back_populates = 'quests')
+    locations = db.relationship('Location', secondary=QuestLocation, back_populates='quests')
 
-    objectives = db.relationship('Objective', back_populates = 'quest_name')
+    objectives = db.relationship('Objective', back_populates='quest_name')
 
-    subsequent = db.relationship('Quest', secondary = Order, primaryjoin = (Order.c.previous == id), secondaryjoin = (Order.c.subsequent == id), back_populates = 'previous')
+    subsequent = db.relationship('Quest', secondary=Order, primaryjoin=(Order.c.previous == id), secondaryjoin=(Order.c.subsequent == id), back_populates='previous')
 
-    previous = db.relationship('Quest', secondary = Order, primaryjoin = (Order.c.subsequent == id), secondaryjoin = (Order.c.previous == id), back_populates = 'subsequent')
+    previous = db.relationship('Quest', secondary=Order, primaryjoin=(Order.c.subsequent == id), secondaryjoin=(Order.c.previous == id), back_populates='subsequent')
 
     def __repr__(self):
         return self.name 
@@ -44,7 +45,7 @@ class Location(db.Model):
     image = db.Column(db.Text())
     map = db.Column(db.Text())
     
-    quests = db.relationship('Quest', secondary = QuestLocation, back_populates = 'locations')
+    quests = db.relationship('Quest', secondary=QuestLocation, back_populates='locations')
 
     def __repr__(self):
         return self.name 
@@ -56,7 +57,8 @@ class Objective(db.Model):
     desc = db.Column(db.Text())
     quest = db.Column(db.Integer, db.ForeignKey('Quest.id'))
 
-    quest_name = db.relationship('Quest', back_populates = 'objectives')
+    quest_name = db.relationship('Quest', back_populates='objectives')
+
 
 class Reward(db.Model):
     __tablename__ = 'Reward'
@@ -64,7 +66,8 @@ class Reward(db.Model):
     item = db.Column(db.Text())
     quest = db.Column(db.Integer, db.ForeignKey('Quest.id'))
 
-    quest_name = db.relationship('Quest', back_populates = 'rewards')
+    quest_name = db.relationship('Quest', back_populates='rewards')
+
 
 class Trader(db.Model):
     __tablename__ = 'Trader'
@@ -73,9 +76,11 @@ class Trader(db.Model):
     desc = db.Column(db.Text())
     image = db.Column(db.Text())
 
-    quests = db.relationship('Quest', back_populates = 'trader_name')
+    quests = db.relationship('Quest', back_populates='trader_name')
+    
     def __repr__(self):
         return self.name 
+
 
 class Password(db.Model):
     __tablename__ = 'Password'
