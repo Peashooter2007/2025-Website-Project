@@ -4,9 +4,7 @@
 
     {{ form.csrf_token }}
     <div class="form-main">
-        <div class="error-message"><p>{{password_error}}</p></div>
-        <p>Password:</p>
-        {{form.password}}{{form.password.errors}}</br>
+        <div class="error-message"><p>{{login_error}}</p></div>
         <p>Trader:</p>
         {{ form.trader }}{{ form.trader.errors }}</br>
         <input type="submit" value="Delete">
