@@ -19,6 +19,7 @@
         {% for quest in trader.quests %}
             <li><a href="/quest/{{ quest.id }}">{{ quest.name }}</a></li>
         {% endfor %}
+        <li><a href="{{ url_for('add_quest', trader_id=trader.id) }}">+ Add Quest</a></li>
     </ul>
     <a href="{{ url_for('delete_trader', trader_id=trader.id) }}">- Delete Trader</a>
 </div>

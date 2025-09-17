@@ -1,7 +1,6 @@
 {% extends 'layout.html' %}
 {% block nav_traders %}active{% endblock %}
 {% block content %}
-
 <div class="trader-list">
     {% for trader in traders %}
         <div class="trader-button">
@@ -11,6 +10,7 @@
             </a>
         </div>
     {% endfor %}
+    <div class="trader-button"><a href="/add_trader">+ Add a Trader</a></div>
 </div>
 
 {% endblock %}

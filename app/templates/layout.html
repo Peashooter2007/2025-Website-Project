@@ -11,11 +11,10 @@
 
     <nav>
       <a href="/" class="{% block nav_home %}{% endblock %}">Home</a> 
-      <a href="/edit" class="{% block nav_edit %}{% endblock %}">Edit</a>
-      <a href="/login" class="{% block nav_login %}{% endblock %}">Login</a>
       <a href="/quests" class="{% block nav_quests %}{% endblock %}">Quests</a>
       <a href="/traders" class="{% block nav_traders %}{% endblock %}">Traders</a>
       <a href="/locations" class="{% block nav_locations %}{% endblock %}">Locations</a>
+      <a href="/login" class="{% block nav_login %}{% endblock %}">Login</a>
     </nav>
 
    {% block content %}{% endblock %}
