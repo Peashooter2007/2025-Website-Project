@@ -28,9 +28,19 @@ class Quest(db.Model):
 
     objectives = db.relationship('Objective', back_populates='quest_name')
 
-    subsequent = db.relationship('Quest', secondary=Order, primaryjoin=(Order.c.previous == id), secondaryjoin=(Order.c.subsequent == id), back_populates='previous')
+    subsequent = db.relationship('Quest',
+                                 secondary=Order,
+                                 primaryjoin=(Order.c.previous == id),
+                                 secondaryjoin=(Order.c.subsequent == id),
+                                 back_populates='previous'
+                                 )
 
-    previous = db.relationship('Quest', secondary=Order, primaryjoin=(Order.c.subsequent == id), secondaryjoin=(Order.c.previous == id), back_populates='subsequent')
+    previous = db.relationship('Quest',
+                               secondary=Order,
+                               primaryjoin=(Order.c.subsequent == id),
+                               secondaryjoin=(Order.c.previous == id),
+                               back_populates='subsequent'
+                               )
 
     def __repr__(self):
         return self.name

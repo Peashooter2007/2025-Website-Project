@@ -5,7 +5,7 @@
 
     {{ form.csrf_token }}
     <div class="form-main">
-        <div class="error-message"><p>{{login_error}}</p></div>
+        <div class="error-message"><p>{{login_error}}{{exist_error}}</p></div>
         <p>Previous Quest:</p>
         {{ form.previous }}</br>
         <p>Subsequent Quest:</p>

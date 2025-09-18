@@ -88,7 +88,8 @@ def login():
         password = form.password.data
         if username == USERNAME and password == PASSWORD:
             session['username'] = username
-            return redirect("/")
+            login_success = "You are now logged in. You can add or remove data from the database."
+            return render_template('login.html', form=form, login_success=login_success, page_title="Admin Login")
         else:
             login_error = "Username or password was incorrect. Please try again."
             return render_template('login.html', form=form, login_error=login_error, page_title="Admin Login")
@@ -250,10 +251,20 @@ def connect_location():
         if "username" in session and session["username"] == "admin":
             quest = models.Quest.query.filter_by(id=form.quest.data).first_or_404()
             location = models.Location.query.filter_by(id=form.location.data).first_or_404()
-            quest.locations.append(location)
-            db.session.add(quest)
-            db.session.commit()
-            return redirect(url_for('quest', id=quest.id))
+            exists = db.session.execute(
+                models.QuestLocation.select().where(
+                    models.QuestLocation.c.qid == quest.id,
+                    models.QuestLocation.c.lid == location.id
+                )
+            ).first()
+            if exists:
+                exist_error = "This location is already connected to this quest."
+                return render_template('connect_location.html', form=form, exist_error=exist_error, page_title="Add a Location")
+            else:
+                quest.locations.append(location)
+                db.session.add(quest)
+                db.session.commit()
+                return redirect(url_for('quest', id=quest.id))
         else:
             login_error = "You are not logged in. Please log in."
             return render_template('connect_location.html', form=form, login_error=login_error, page_title="Add a Location")
@@ -272,10 +283,20 @@ def connect_quests():
         if "username" in session and session["username"] == "admin":
             previous = models.Quest.query.filter_by(id=form.previous.data).first_or_404()
             subsequent = models.Quest.query.filter_by(id=form.subsequent.data).first_or_404()
-            previous.subsequent.append(subsequent)
-            db.session.add(previous)
-            db.session.commit()
-            return redirect(url_for('quest', id=previous.id))
+            exists = db.session.execute(
+                models.Order.select().where(
+                    models.Order.c.previous == previous.id,
+                    models.Order.c.subsequent == subsequent.id
+                )
+            ).first()
+            if exists:
+                exist_error = "These quests are already connected."
+                return render_template('connect_quests.html', form=form, exist_error=exist_error, page_title="Connect Quests")
+            else:
+                previous.subsequent.append(subsequent)
+                db.session.add(previous)
+                db.session.commit()
+                return redirect(url_for('quest', id=previous.id))
         else:
             login_error = "You are not logged in. Please log in."
             return render_template('connect_quests.html', form=form, login_error=login_error, page_title="Connect Quests")
@@ -298,7 +319,7 @@ def delete_quest():
             return redirect(url_for('quests'))
         else:
             login_error = "You are not logged in. Please log in."
-            return render_template('delete_quests.html', form=form, login_error=login_error, page_title="Delete a Quest")
+            return render_template('delete_quest.html', form=form, login_error=login_error, page_title="Delete a Quest")
     else:
         return render_template('delete_quest.html', form=form, page_title="Delete a Quest")
 
