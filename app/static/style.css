@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Saira&display=swap');
 
+/* universal */
 html {
   font-family: 'Saira';
 }
@@ -26,6 +27,12 @@ body {
   background-size:cover;
   position:relative;
   font-size:21vh;
+}
+
+/* home */
+.home-container{
+  margin: 50px;
+  text-align: center;
 }
 
 /* navbar */
